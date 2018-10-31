@@ -1,11 +1,22 @@
 <template>
   <Row class="top">
     <Col span="24" align="center">
-      <h1>Movie Recommendation</h1>
+      <h1>Movie Recomondation</h1>
     </Col>
     <Col span="22" offset="1" class="choose">
       <h1 style="color: #2db7f5">数据展示</h1>
-      
+    </Col>
+    <Col span="12">
+      <v-chart :options="pie"/>
+    </Col>
+    <Col span="12">
+      <v-chart :options="bar"/>
+    </Col>
+    <Col span="9" offset="2" class="bottom">
+      <h3 style="font-size:16px;">推荐结果中的电影</h3>
+    </Col>
+    <Col span="9" offset="1" align="center" class="bottom">
+      <h3 style="font-size:16px;">生成的频繁项集长度占得比例</h3>
     </Col>
     <Col span="22" offset="1" class="choose">
       <h1 style="color: #2db7f5">推荐</h1>
@@ -70,23 +81,95 @@
         </Col>
       </Row>
     </Col>
-    <Col span="22" offset="1" class="top">
+    <Col span="22" offset="1" class="top bottom">
       <h2 v-if="recomondation === ''">还没输入哦！</h2>
-      <h2 v-else>你也许会喜欢：<span style="color: #57c5f7">{{recomondation}}</span></h2>
+      <h2 v-else>你也许会喜欢：<span style="color: #57c5f7">{{recomondation}}！</span></h2>
     </Col>
   </Row>
 </template>
 
 <script>
   import movie from '../assets/json'
+  import ECharts from 'vue-echarts/components/ECharts'
+  import 'echarts/lib/chart/line'
+  import 'echarts/lib/component/polar'
   import { Button } from 'iview'
   export default {
     name: 'landing-page',
     components: {
+      'v-chart': ECharts,
       Button
     },
     data () {
       return {
+        bar: {
+          legend: {},
+          tooltip: {},
+          dataset: {
+            // Provide data.
+            source: [
+              ['频繁项集长度', '数目'],
+              ['2', 93],
+              ['3', 295],
+              ['4', 593],
+              ['5', 785],
+              ['6', 677],
+              ['7', 373],
+              ['8', 126],
+              ['9', 24],
+              ['10', 10]
+            ]
+          },
+          xAxis: { type: 'category' },
+          yAxis: {},
+          series: [
+            {
+              type: 'bar',
+              color: ['#93d2f6']
+            }
+          ]
+        },
+        pie: {
+          title: {
+            text: '',
+            x: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a}  {b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '50%'],
+              color: ['#419adf', '#57b4f0', '#3887cb', '#93d2f6', '#6ec1f2', '#66c2f9', '#48a8ee', '#3076b8'],
+              data: [
+                {value: 952, name: '星球大战(1977)'},
+                {value: 535, name: '夺宝奇兵(1981)'},
+                {value: 6, name: '低俗小说(1994)'},
+                {value: 30, name: '肖申克的救赎(1994)'},
+                {value: 169, name: '沉默的羔羊(1991)'},
+                {value: 188, name: '星球大战V：帝国反击战(1980)'},
+                {value: 11, name: '星球大战VI：绝地归来(1983)'}
+              ],
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.8)'
+                }
+              }
+            }
+          ],
+          animationDuration: 2000
+        },
         one: '',
         two: '',
         three: '',
@@ -98,6 +181,7 @@
         dataFour: [],
         dataFive: [],
         all: [],
+        number: 5,
         recomondation: '',
         group: 'five',
         col: 4
@@ -219,7 +303,7 @@
         this.three = ''
         this.four = ''
         this.five = ''
-        this.recommendation = ''
+        this.recomondation = ''
       },
       getMovie () {
         const that = this
