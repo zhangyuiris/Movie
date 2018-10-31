@@ -1,6 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 .top {
   padding-top: 20px;
 }
+
+.title {
+  padding-top: 40px;
+}
+
+.choose {
+  padding-top: 80px;
+}
+
 h1 {
   color: #17233d; 
   font-size:30px
