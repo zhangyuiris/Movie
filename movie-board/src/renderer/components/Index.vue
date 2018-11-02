@@ -5,12 +5,24 @@
     </Col>
     <Col span="22" offset="1" class="choose">
       <h1 style="color: #2db7f5">数据展示</h1>
+      <h2>当样本为200，频繁项集最小支持度50</h2>
+      <h2 style="color: #ed4014">置信度>0.95的规则有2715</h2>
     </Col>
     <Col span="12">
       <v-chart :options="pie"/>
     </Col>
     <Col span="12">
       <v-chart :options="bar"/>
+    </Col>
+    <Col span="22" offset="1" class="choose">
+      <h2>当样本为220，频繁项集最小支持度50</h2>
+      <h2 style="color: #ed4014">置信度>0.95的规则有52116</h2>
+    </Col>
+    <Col span="12">
+      <v-chart :options="pie2"/>
+    </Col>
+    <Col span="12">
+      <v-chart :options="bar2"/>
     </Col>
     <Col span="9" offset="2" class="bottom">
       <h3 style="font-size:16px;">推荐结果中的电影</h3>
@@ -129,6 +141,35 @@
             }
           ]
         },
+        bar2: {
+          legend: {},
+          tooltip: {},
+          dataset: {
+            // Provide data.
+            source: [
+              ['频繁项集长度', '数目'],
+              ['2', 309],
+              ['3', 1434],
+              ['4', 4184],
+              ['5', 8150],
+              ['6', 10776],
+              ['7', 9692],
+              ['8', 5862],
+              ['9', 2300],
+              ['10', 539],
+              ['11', 64],
+              ['12', 3]
+            ]
+          },
+          xAxis: { type: 'category' },
+          yAxis: {},
+          series: [
+            {
+              type: 'bar',
+              color: ['#93d2f6']
+            }
+          ]
+        },
         pie: {
           title: {
             text: '',
@@ -158,6 +199,51 @@
                 {value: 169, name: '沉默的羔羊(1991)'},
                 {value: 188, name: '星球大战V：帝国反击战(1980)'},
                 {value: 11, name: '星球大战VI：绝地归来(1983)'}
+              ],
+              itemStyle: {
+                emphasis: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.8)'
+                }
+              }
+            }
+          ],
+          animationDuration: 2000
+        },
+        pie2: {
+          title: {
+            text: '',
+            x: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a}  {b} : {c} ({d}%)'
+          },
+          legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '50%'],
+              color: ['#419adf', '#57b4f0', '#3887cb', '#93d2f6', '#6ec1f2', '#66c2f9', '#48a8ee', '#3076b8'],
+              data: [
+                {value: 9524, name: '星球大战(1977)'},
+                {value: 11700, name: '夺宝奇兵(1981)'},
+                {value: 177, name: '低俗小说(1994)'},
+                {value: 349, name: '肖申克的救赎(1994)'},
+                {value: 414, name: '沉默的羔羊(1991)'},
+                {value: 3886, name: '星球大战V：帝国反击战(1980)'},
+                {value: 1, name: '星球大战VI：绝地归来(1983)'},
+                {value: 30, name: '终结者1(1984)'},
+                {value: 209, name: '终结者2(1991)'},
+                {value: 156, name: '非常嫌疑犯(1995)'},
+                {value: 16, name: '莫扎特传(1984)'}
               ],
               itemStyle: {
                 emphasis: {
