@@ -1,7 +1,7 @@
 <template>
   <Row class="top">
     <Col span="24" align="center">
-      <h1>Movie Recomondation</h1>
+      <h1>Movie Recommendation</h1>
     </Col>
     <Col span="22" offset="1" class="choose">
       <h1 style="color: #2db7f5">数据展示</h1>
@@ -82,8 +82,8 @@
       </Row>
     </Col>
     <Col span="22" offset="1" class="top bottom">
-      <h2 v-if="recomondation === ''">还没输入哦！</h2>
-      <h2 v-else>你也许会喜欢：<span style="color: #57c5f7">{{recomondation}}！</span></h2>
+      <h2 v-if="recommendation === ''">还没输入哦！</h2>
+      <h2 v-else>你也许会喜欢：<span style="color: #57c5f7">{{recommendation}}！</span></h2>
     </Col>
   </Row>
 </template>
@@ -182,7 +182,7 @@
         dataFive: [],
         all: [],
         number: 5,
-        recomondation: '',
+        recommendation: '',
         group: 'five',
         col: 4
       }
@@ -199,6 +199,7 @@
         this.dataThree = []
         this.dataFour = []
         this.dataFive = []
+        this.recommendation = ''
         switch (this.group) {
           case 'five': {
             this.number = 5
@@ -277,21 +278,21 @@
           case 5: {
             if (that.one !== '' && that.two !== '' && that.three !== '' && that.four !== '' && that.five !== '') {
               let filteredMovie = this.all.filter(item => item.favor[0] === that.one && item.favor[1] === that.two && item.favor[2] === that.three && item.favor[3] === that.four && item.favor[4] === that.five)
-              that.recomondation = filteredMovie[0].recomondation
+              that.recommendation = filteredMovie[0].recommendation
             }
             break
           }
           case 4: {
             if (that.one !== '' && that.two !== '' && that.three !== '' && that.four !== '') {
               let filteredMovie = this.all.filter(item => item.favor[0] === that.one && item.favor[1] === that.two && item.favor[2] === that.three && item.favor[3] === that.four)
-              that.recomondation = filteredMovie[0].recomondation
+              that.recommendation = filteredMovie[0].recommendation
             }
             break
           }
           case 3: {
             if (that.one !== '' && that.two !== '' && that.three !== '') {
               let filteredMovie = this.all.filter(item => item.favor[0] === that.one && item.favor[1] === that.two && item.favor[2] === that.three)
-              that.recomondation = filteredMovie[0].recomondation
+              that.recommendation = filteredMovie[0].recommendation
             }
             break
           }
@@ -303,7 +304,7 @@
         this.three = ''
         this.four = ''
         this.five = ''
-        this.recomondation = ''
+        this.recommendation = ''
       },
       getMovie () {
         const that = this
